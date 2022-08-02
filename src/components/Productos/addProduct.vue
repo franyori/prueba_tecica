@@ -30,7 +30,28 @@
               label="Nombre del Producto"
               hint="Nombre Identificatorio"
               lazy-rules
-              :rules="[(val) => (val && val.length > 0) || 'Escriba el Nombre']"
+              :rules="[val => (val && val.length > 0) || 'Escriba el Nombre']"
+            >
+              <template v-slot:prepend>
+                <q-icon color="primary" name="person" />
+              </template>
+            </q-input>
+          </div>
+          <div
+            class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 q-pr-md q-pt-md"
+          >
+            <q-input
+              dense
+              filled
+              v-model="referencia"
+              standout
+              bg-color="grey-3"
+              label="Referencia de Producto"
+              hint="Referencia"
+              lazy-rules
+              :rules="[
+                val => (val && val.length > 0) || 'Escriba la Referencia'
+              ]"
             >
               <template v-slot:prepend>
                 <q-icon color="primary" name="person" />
@@ -53,7 +74,7 @@
               hint="Descripción Producto"
               lazy-rules
               :rules="[
-                (val) => (val && val.length > 0) || 'Escriba la Descripción',
+                val => (val && val.length > 0) || 'Escriba la Descripción'
               ]"
             >
               <template v-slot:prepend>
@@ -76,9 +97,7 @@
               label="Precio del  Producto"
               hint="Precio del  Producto"
               lazy-rules
-              :rules="[
-                (val) => (val && val.length > 0) || 'Escriba El Precio ',
-              ]"
+              :rules="[val => (val && val.length > 0) || 'Escriba El Precio ']"
             >
               <template v-slot:prepend>
                 <q-icon color="primary" name="person" />
@@ -86,33 +105,61 @@
             </q-input>
           </div>
         </div>
-
         <div class="row">
-          <div
-            class="
-              col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12
-              q-pr-md q-pt-md
-            "
-          >
-            <q-toggle
-              left-label
-              icon="task_alt"
-              true-value="ACTIVO"
-              false-value="INACTIVO"
-              v-model="theModel2"
-              label="Status"
-            ></q-toggle>
-            <div class="q-px-sm">
-              Seleccione Un Status:
-              <strong>
-                <q-chip outline text-color="primary ">{{
-                  JSON.stringify(theModel2)
-                }}</q-chip></strong
-              >
+          <div class="col-12 text-left q-pt-md">
+            <p class="text-subtitle2">Tipo de Producto</p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col q-pt-none q-pr-md q-pl-lg">
+            <div class="q-gutter-lg ">
+              <q-radio
+                dense
+                v-model="shape"
+                checked-icon="task_alt"
+                unchecked-icon="panorama_fish_eye"
+                val="simple"
+                label="Simple" 
+                @input ="formodal()"
+              />
+              <q-radio
+                dense
+                v-model="shape"
+                checked-icon="task_alt"
+                unchecked-icon="panorama_fish_eye"
+                val="variable"
+                label="Variable" 
+                 @input ="formodal()"
+              />
             </div>
           </div>
         </div>
+        <div class="q-pa-md q-gutter-sm">
+          
+          <q-dialog v-model="toolbar">
+            <q-card>
+              <q-toolbar>
+                <q-avatar>
+                  <img src="https://cdn.quasar.dev/logo-v2/svg/logo.svg" />
+                </q-avatar>
 
+                <q-toolbar-title
+                  ><span class="text-weight-bold">Quasar</span>
+                  Framework</q-toolbar-title
+                >
+
+                <q-btn flat round dense icon="close" v-close-popup />
+              </q-toolbar>
+
+              <q-card-section>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum
+                repellendus sit voluptate voluptas eveniet porro. Rerum
+                blanditiis perferendis totam, ea at omnis vel numquam
+                exercitationem aut, natus minima, porro labore.
+              </q-card-section>
+            </q-card>
+          </q-dialog>
+        </div>
         <div class="col-12 q-pt-md">
           <q-btn label="Enviar" type="submit" color="primary" />
           <q-btn
@@ -127,45 +174,57 @@
     </q-card>
   </div>
 </template>
+
 <script>
 export default {
-  name: "Add",
-  data() {
+  name: 'Add',
+  data () {
     return {
-      shape: "line",
+      shape: 'simple',
       name: null,
+      referencia: null,
       precio: null,
       descripcion: null,
       accept: false,
       model: null,
-      theModel2: "",
-    };
+      theModel2: '',
+      toolbar: false
+    }
   },
   methods: {
-    onSubmit() {
+    onSubmit () {
       if (this.accept !== true) {
         this.$q.notify({
-          color: "red-5",
-          textColor: "white",
-          icon: "warning",
-        });
+          color: 'red-5',
+          textColor: 'white',
+          icon: 'warning'
+        })
       } else {
         this.$q.notify({
-          color: "green-4",
-          textColor: "white",
-          icon: "cloud_done",
-          message: "Submitted",
-        });
+          color: 'green-4',
+          textColor: 'white',
+          icon: 'cloud_done',
+          message: 'Submitted'
+        })
       }
     },
 
-    onReset() {
-      this.name = null;
-      this.descripcion = null;
-      this.precio = null;
-      this.accept = false;
-      this.theModel2 = "";
+    onReset () {
+      this.name = null
+      this.referencia = null
+      this.descripcion = null
+      this.precio = null
+      this.accept = false
+      this.theModel2 = ''
     },
-  },
-};
+
+    formodal(){
+      if (this.shape === 'simple') {
+        this.toolbar = false;
+      }else{
+         this.toolbar = true;
+      }
+    }
+  }
+}
 </script>
