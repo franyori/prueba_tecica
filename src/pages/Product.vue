@@ -7,8 +7,13 @@
     </div>
 
     <div class="row">
-      <list :listproduct="apiProduct" />
-      <addProduct />
+      <list 
+        :listproduct="apiProduct" 
+        @listProduct="listProduct"
+        />
+      <addProduct 
+        @listProduct="listProduct"
+      />
     </div>
   </div>
 </template>

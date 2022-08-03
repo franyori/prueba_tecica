@@ -8,11 +8,8 @@
               <q-td key="nombre" :props="props">
                 {{ props.row.nombre }}
               </q-td>
-              <q-td key="referencia" :props="props">
-                {{ props.row.referencia }}
-              </q-td>
               <q-td key="descripcion" :props="props">
-                {{ props.row.descripcion }}
+                {{ props.row.variant.descripcion }}
               </q-td>
               <q-td key="precio" :props="props">
                 {{ props.row.precio }}
@@ -70,16 +67,9 @@ export default {
           sortable: true
         },
         {
-          name: 'referencia',
-          align: 'center',
-          label: 'Referencia',
-          field: row => row.referencia,
-          sortable: true
-        },
-        {
           name: 'descripcion',
           label: 'Descripción',
-          field: row => row.descripcion,
+          field: row => row.variant.descripcion,
           sortable: true
         },
         { name: 'precio', label: 'Precio', field: row => row.precio },

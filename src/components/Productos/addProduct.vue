@@ -11,9 +11,6 @@
             </div>
           </q-card-section>
         </div>
-        <div class="col-12 text-left">
-          <p class="text-subtitle2">Caracteristicas</p>
-        </div>
       </div>
 
       <q-form id="form" @submit.prevent="addProduct()"  @reset="onReset">
@@ -33,7 +30,7 @@
               :rules="[val => (val && val.length > 0) || 'Escriba el Nombre']"
             >
               <template v-slot:prepend>
-                <q-icon color="primary" name="person" />
+                <q-icon color="primary" name="draw" />
               </template>
             </q-input>
           </div>
@@ -54,7 +51,7 @@
               ]"
             >
               <template v-slot:prepend>
-                <q-icon color="primary" name="person" />
+                <q-icon color="primary" name="draw" />
               </template>
             </q-input>
           </div>
@@ -78,7 +75,7 @@
               ]"
             >
               <template v-slot:prepend>
-                <q-icon color="primary" name="person" />
+                <q-icon color="primary" name="draw" />
               </template>
             </q-input>
           </div>
@@ -100,7 +97,7 @@
               :rules="[val => (val && val.length > 0) || 'Escriba El Precio ']"
             >
               <template v-slot:prepend>
-                <q-icon color="primary" name="person" />
+                <q-icon color="primary" name="draw" />
               </template>
             </q-input>
           </div>
@@ -120,6 +117,7 @@
                 unchecked-icon="panorama_fish_eye"
                 val="simple"
                 label="Simple" 
+                @input="openDialogVar()"
               />
               <q-radio
                 dense
@@ -127,36 +125,29 @@
                 checked-icon="task_alt"
                 unchecked-icon="panorama_fish_eye"
                 val="variable"
-                label="Variable" 
+                label="Variable"
+                @input="openDialogVar()" 
               />
             </div>
           </div>
         </div>
-        <div class="q-pa-md q-gutter-sm">
-          
-          <q-dialog v-model="toolbar">
-            <q-card>
-              <q-toolbar>
-                <q-avatar>
-                  <img src="https://cdn.quasar.dev/logo-v2/svg/logo.svg" />
-                </q-avatar>
-
-                <q-toolbar-title
-                  ><span class="text-weight-bold">Quasar</span>
-                  Framework</q-toolbar-title
-                >
-
-                <q-btn flat round dense icon="close" v-close-popup />
-              </q-toolbar>
-
-              <q-card-section>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum
-                repellendus sit voluptate voluptas eveniet porro. Rerum
-                blanditiis perferendis totam, ea at omnis vel numquam
-                exercitationem aut, natus minima, porro labore.
-              </q-card-section>
-            </q-card>
-          </q-dialog>
+        <div class="q-pa-md q-ma-md">
+           <q-list bordered separator v-show="shape == 'variable'">
+            <q-item clickable v-ripple>
+                <q-item-section class="text-primary text-bold">Descripción</q-item-section>
+                <q-item-section class="text-primary text-bold">Precio</q-item-section>
+                <q-item-section class="text-primary text-bold" side>
+                  <q-btn icon="add" flat dense @click="openDialogVar()" color="primary"/>
+                </q-item-section>
+            </q-item>
+             <q-item v-for="(variant, index) in variantsArray" :key="index" clickable v-ripple>
+                <q-item-section> {{ variant.descripcion }}</q-item-section>
+                <q-item-section> {{ variant.precio }}</q-item-section>
+                <q-item-section class="text-primary text-bold" side>
+                  <q-btn icon="delete" flat dense color="primary"/>
+                </q-item-section>
+            </q-item>
+          </q-list>
         </div>
         <div class="col-12 q-pt-md">
           <q-btn label="Enviar" type="submit" color="primary" />
@@ -170,10 +161,17 @@
         </div>
       </q-form>
     </q-card>
+    <modal-variaciones 
+      v-show="shape == 'variable'"
+      :dialogVariant="dialogVariant"
+      @insertVariantArray="insertVariantArray"
+    >
+    </modal-variaciones>
   </div>
 </template>
 
 <script>
+import modalVariaciones from './modalVariaciones'
 import { Headers } from '../../../Headers'
 import axios from 'axios'
 import { Global } from '../../Global'
@@ -181,6 +179,9 @@ import { Notify } from 'quasar'
 
 export default {
   name: 'addProduct',
+  components: {
+    modalVariaciones,
+  },
   data () {
     return {
       shape: 'simple',
@@ -191,10 +192,19 @@ export default {
       accept: false,
       model: null,
       theModel2: '',
-      toolbar: false
+      toolbar: false,
+      dialogVariant: false,
+      variantsArray: []
     }
   },
   methods: {
+    insertVariantArray(params, params2){
+      this.dialogVariant = params
+      this.variantsArray = params2
+    },
+    openDialogVar(){
+      this.dialogVariant = true
+    },
     onSubmit () {
       if (this.accept !== true) {
         this.$q.notify({
@@ -234,11 +244,14 @@ export default {
         referencia: this.referencia,
         descripcion: this.descripcion,
         precio: this.precio,
-        tipo_producto: this.shape
+        tipo_producto: this.shape,
+        variant: this.variantsArray
       }
       try {
         const add = await axios.post(Global.url + 'product', params, Headers)
         if (add.status === 200) {
+          this.$emit('listProduct')
+          this.onReset()
           Notify.create({
             type: 'positive',
             message: 'Producto Agregado',

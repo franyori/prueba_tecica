@@ -91,7 +91,7 @@
           <q-expansion-item
             :content-inset-level="0.5"
             expand-separator
-            icon="person"
+            icon="view_headline"
             label="Definición"
             no-caps
           >

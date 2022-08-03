@@ -36,7 +36,7 @@
               ]"
             >
               <template v-slot:prepend>
-                <q-icon color="primary" name="person" />
+                <q-icon color="primary" name="draw" />
               </template>
             </q-input>
           </div>
@@ -60,7 +60,7 @@
               ]"
             >
               <template v-slot:prepend>
-                <q-icon color="primary" name="person" />
+                <q-icon color="primary" name="draw" />
               </template>
             </q-input>
           </div>
@@ -82,7 +82,7 @@
               :rules="[val => (val && val.length > 0) || 'Escriba El Precio ']"
             >
               <template v-slot:prepend>
-                <q-icon color="primary" name="person" />
+                <q-icon color="primary" name="draw" />
               </template>
             </q-input>
           </div>
@@ -95,7 +95,7 @@
               q-pr-md q-pt-sm
             "
           >
-           <q-select v-model="product" :option-value="(listproduct) => listproduct.nombre"   label="Productos" />
+           <q-select v-model="product" map-options :option-value="(listproduct) => listproduct.nombre"   label="Productos" />
            </div>
         </div>
         <div class="q-pa-md q-gutter-sm">

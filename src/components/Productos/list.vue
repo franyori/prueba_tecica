@@ -28,7 +28,7 @@
                   size="sm"
                   color="primary"
                   class="q-ma-none"
-                  @click="deleteProduct(props.row.id)"
+                  @click="editProduct(props.row.id)"
                 />
                 <q-btn
                   flat
@@ -108,6 +108,31 @@ export default {
           Headers
         )
         if (list.status === 200) {
+          this.$emit('listProduct')
+          Notify.create({
+            type:'positive',
+            message: 'Producto Eliminado!',
+            color:'purple',
+          })
+        }
+      } catch (error) {
+        console.log(error)
+        Notify.create({
+            type:'warning',
+            message: 'Error al intentar eliminar el Producto!',
+            color:'warning',
+            position:'center'
+          })
+      }
+    },
+    async editProduct (req, res) {
+      try {
+        let list = await axios.put(
+          Global.url + 'product/' + `${req}`,
+          Headers
+        )
+        if (list.status === 200) {
+          this.$emit('listProduct')
           Notify.create({
             type:'positive',
             message: 'Producto Eliminado!',
