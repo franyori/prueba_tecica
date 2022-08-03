@@ -106,6 +106,17 @@
                 no-caps
               ></q-btn>
             </q-item-section>
+            <q-item-section side>
+              <q-btn
+                to="/VariacionesProduct"
+                size="14px"
+                flat
+                icon="add"
+                label="Variaciones"
+                color="primary"
+                no-caps
+              ></q-btn>
+            </q-item-section>
           </q-expansion-item>
         </q-item>
       </q-list>

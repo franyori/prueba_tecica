@@ -120,7 +120,6 @@
                 unchecked-icon="panorama_fish_eye"
                 val="simple"
                 label="Simple" 
-                @input ="formodal()"
               />
               <q-radio
                 dense
@@ -129,7 +128,6 @@
                 unchecked-icon="panorama_fish_eye"
                 val="variable"
                 label="Variable" 
-                 @input ="formodal()"
               />
             </div>
           </div>

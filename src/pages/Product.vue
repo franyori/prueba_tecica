@@ -33,9 +33,9 @@ export default {
   created () {
     this.listProduct()
   },
-  /* updated () {
+  updated () {
     this.listProduct()
-  }, */
+  },
   methods: {
     async listProduct (req, res) {
       try {

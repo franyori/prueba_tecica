@@ -1,7 +1,7 @@
 <template>
-  <div class="col-md-8 col-lg-8 col-xs-12 col-sm-12">
-    <q-card flat>
-      <q-card-section>
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+    <q-card flat class="col">
+      <q-card-section class="col">
         <q-table :data="listproduct" :columns="columns" row-key="id">
           <template v-slot:body="props">
             <q-tr :props="props">
@@ -16,9 +16,6 @@
               </q-td>
               <q-td key="precio" :props="props">
                 {{ props.row.precio }}
-              </q-td>
-              <q-td key="tipo_producto" :props="props">
-                {{ props.row.tipo_producto }}
               </q-td>
               <q-td key="acciones" :props="props">
                 <q-btn
@@ -66,7 +63,7 @@ export default {
         {
           name: 'nombre',
           required: true,
-          label: 'Nombre',
+          label: 'Nombre del Producto',
           align: 'left',
           field: row => row.nombre,
           sortable: true
@@ -85,17 +82,8 @@ export default {
           sortable: true
         },
         { name: 'precio', label: 'Precio', field: row => row.precio },
-        {
-          name: 'tipo_producto',
-          label: 'Tipo de producto',
-          field: row => row.tipo_producto,
-          sortable: true
-        },
-        {
-          name: 'acciones',
-          label: 'Acciones',
-          sortable: true
-        }
+        
+        
       ]
     }
 
