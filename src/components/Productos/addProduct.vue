@@ -16,7 +16,7 @@
         </div>
       </div>
 
-      <q-form id="form" @submit.prevent="onSubmit()" @reset="onReset">
+      <q-form id="form" @submit.prevent="addProduct()"  @reset="onReset">
         <div class="row">
           <div
             class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 q-pr-md"
@@ -176,8 +176,13 @@
 </template>
 
 <script>
+import { Headers } from '../../../Headers'
+import axios from 'axios'
+import { Global } from '../../Global'
+import { Notify } from 'quasar'
+
 export default {
-  name: 'Add',
+  name: 'addProduct',
   data () {
     return {
       shape: 'simple',
@@ -223,6 +228,33 @@ export default {
         this.toolbar = false;
       }else{
          this.toolbar = true;
+      }
+    },
+      async addProduct (req, res) {
+      let params = {
+        nombre: this.name,
+        referencia: this.referencia,
+        descripcion: this.descripcion,
+        precio: this.precio,
+        tipo_producto: this.shape
+      }
+      try {
+        const add = await axios.post(Global.url + 'product', params, Headers)
+        if (add.status === 200) {
+          Notify.create({
+            type: 'positive',
+            message: 'Producto Agregado',
+            color: 'positive'
+          })
+        }
+      } catch (error) {
+       // console.log(params)
+        Notify.create({
+          type: 'warning',
+          message: 'Error con el Servidor!',
+          color: 'warning',
+          position: 'center'
+        })
       }
     }
   }

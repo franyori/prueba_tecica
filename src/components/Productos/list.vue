@@ -14,6 +14,11 @@
 </template>
 
 <script>
+import { Headers } from '../../../Headers'
+import axios from 'axios'
+import { Global } from '../../Global'
+import { Notify } from 'quasar'
+
 export default {
   name: 'list',
   
