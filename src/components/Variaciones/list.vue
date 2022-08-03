@@ -9,12 +9,17 @@
                 {{ props.row.nombre }}
               </q-td>
               <q-td key="descripcion" :props="props">
-                {{ props.row.variant.descripcion }}
+                {{ props.row.descripcion }}
               </q-td>
               <q-td key="precio" :props="props">
                 {{ props.row.precio }}
               </q-td>
-             
+            <!--  <q-list dense bordered separator>
+            <q-item v-for="(variant, index) in  props.row.variant" :key="index">
+                <q-item-section> {{ variant.descripcion }}</q-item-section>
+                <q-item-section> {{ variant.precio }}</q-item-section>
+            </q-item>
+            </q-list> -->
               <q-td key="acciones" :props="props">
                 <q-btn
                   flat
@@ -69,7 +74,7 @@ export default {
         {
           name: 'descripcion',
           label: 'Descripción',
-          field: row => row.variant.descripcion,
+          field: row => row.descripcion,
           sortable: true
         },
         { name: 'precio', label: 'Precio', field: row => row.precio },
