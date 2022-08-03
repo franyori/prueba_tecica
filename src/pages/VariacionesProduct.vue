@@ -6,21 +6,24 @@
       </p>
     </div>
 
-    <div class="row col-12">
-      <list :listproduct="apiProduct" class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12" />
+    <div class="row">
+      <list :listproduct="apiProduct" />
+      <add />
     </div>
   </div>
 </template>
 
 <script>
-import list from '../components/Productos/list.vue'
+import list from '../components/Variaciones/list.vue'
+import add from '../components/Variaciones/add.vue'
 import { Headers } from '../../Headers'
 import { Global } from '../Global'
 import axios from 'axios'
 export default {
-  name: 'Product',
+  name: 'VariacionesProduct',
   components: {
-    list
+    list,
+    add
   },
   data () {
     return {

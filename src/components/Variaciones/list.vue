@@ -1,7 +1,7 @@
 <template>
-  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-    <q-card flat class="col">
-      <q-card-section class="col">
+  <div class="col-md-8 col-lg-8 col-xs-12 col-sm-12">
+    <q-card flat>
+      <q-card-section>
         <q-table :data="listproduct" :columns="columns" row-key="id">
           <template v-slot:body="props">
             <q-tr :props="props">
@@ -17,6 +17,7 @@
               <q-td key="precio" :props="props">
                 {{ props.row.precio }}
               </q-td>
+             
               <q-td key="acciones" :props="props">
                 <q-btn
                   flat
@@ -82,8 +83,11 @@ export default {
           sortable: true
         },
         { name: 'precio', label: 'Precio', field: row => row.precio },
-        
-        
+        {
+          name: 'acciones',
+          label: 'Acciones',
+          sortable: true
+        }
       ]
     }
 
@@ -92,7 +96,7 @@ export default {
     async deleteProduct (req, res) {
       try {
         let list = await axios.delete(
-          Global.url + 'categoria/delete/' + `${req}`,
+          Global.url + 'product/' + `${req}`,
           Headers
         )
         if (list.status === 200) {

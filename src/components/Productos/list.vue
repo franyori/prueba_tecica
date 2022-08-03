@@ -104,7 +104,7 @@ export default {
     async deleteProduct (req, res) {
       try {
         let list = await axios.delete(
-          Global.url + 'categoria/delete/' + `${req}`,
+          Global.url + 'product/' + `${req}`,
           Headers
         )
         if (list.status === 200) {
