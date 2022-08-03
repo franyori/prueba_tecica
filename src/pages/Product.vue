@@ -7,7 +7,7 @@
     </div>
 
     <div class="row">
-      <list :listproduct="this.apiProduct" />
+      <list :listproduct="apiProduct" />
       <addProduct />
     </div>
   </div>
@@ -30,17 +30,17 @@ export default {
       apiProduct: []
     }
   },
-  mounted () {
+  created () {
     this.listProduct()
   },
-  updated () {
+  /* updated () {
     this.listProduct()
-  },
+  }, */
   methods: {
     async listProduct (req, res) {
       try {
         let list = await axios.get(Global.url + 'product', Headers)
-        this.apiProduct = list.data
+        this.apiProduct = list.data.data
         console.log(this.apiProduct)
       } catch (error) {
         console.log(error)
